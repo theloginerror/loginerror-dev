@@ -1,0 +1,56 @@
+name: Update Forum Stats
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Forum Data
+        run: |
+          mkdir -p data
+          curl -s "https://forum.uipath.com/u/loginerror.json" -o data/loginerror.json
+          curl -s "https://forum.uipath.com/u/loginerror/summary.json" -o data/summary.json
+
+      - name: Process Stats
+        id: process
+        run: |
+          # Use node to process the JSON and create a clean stats.json
+          node -e '
+            const fs = require("fs");
+            const summary = JSON.parse(fs.readFileSync("data/summary.json")).user_summary;
+            const user = JSON.parse(fs.readFileSync("data/loginerror.json")).user;
+
+            const formatK = (num) => (num >= 1000 ? (num / 1000).toFixed(1) + "k" : num);
+            const formatDays = (seconds) => Math.floor(seconds / 86400) + " days";
+
+            const stats = [
+              { label: "[VITAL]", val: `READ_TIME: ${formatDays(summary.time_read)}` },
+              { label: "[VITAL]", val: `VISITED: ${summary.days_visited.toLocaleString()} days` },
+              { label: "[DATA]",  val: `TOPICS_VIEWED: ${formatK(summary.topics_entered)}` },
+              { label: "[DATA]",  val: `POSTS_READ: ${formatK(summary.posts_read_count)}` },
+              { label: "[ACT]",   val: `SOLUTIONS: ${summary.solved_count}` },
+              { label: "[ACT]",   val: `POSTS_CREATED: ${formatK(summary.post_count)}` },
+              { label: "[INT]",   val: `LIKES_GIVEN: ${formatK(summary.likes_given)}` },
+              { label: "[INT]",   val: `LIKES_RCVD: ${formatK(summary.likes_received)}` },
+              { label: "[LOG]",   val: `TOPICS_CREATED: ${summary.topic_count}` }
+            ];
+
+            fs.writeFileSync("data/stats.json", JSON.stringify(stats, null, 2));
+          '
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/stats.json
+          git commit -m "chore: update forum stats [skip ci]" || echo "No changes to commit"
+          git push

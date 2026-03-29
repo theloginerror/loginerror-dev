@@ -120,8 +120,8 @@
         }
         setInterval(updateUptime, 1000);
 
-        // Community Pulse Stats
-        const stats = [
+        // Community Pulse Stats (Loaded dynamically)
+        let stats = [
             { label: "[VITAL]", val: "READ_TIME: 86 days" },
             { label: "[VITAL]", val: "VISITED: 2,700 days" },
             { label: "[DATA]",  val: "TOPICS_VIEWED: 57.8k" },
@@ -133,16 +133,24 @@
             { label: "[LOG]",   val: "BOOKMARKS: 419" }
         ];
 
+        async function loadStats() {
+            try {
+                const response = await fetch('data/stats.json');
+                if (response.ok) {
+                    stats = await response.json();
+                }
+            } catch (e) {
+                console.log("Using fallback stats");
+            }
+        }
+
         let currentIndex = 0;
         const labelEl = document.querySelector('.stat-label');
         const valEl = document.getElementById('cycling-stat');
 
         function cycleStats() {
             currentIndex = (currentIndex + 1) % stats.length;
-            
-            // Brief flicker effect
             valEl.style.opacity = 0;
-            
             setTimeout(() => {
                 labelEl.textContent = stats[currentIndex].label;
                 valEl.textContent = stats[currentIndex].val;
@@ -150,7 +158,9 @@
             }, 50);
         }
 
-        setInterval(cycleStats, 1500); // Adjust speed here (ms)
+        loadStats().then(() => {
+            setInterval(cycleStats, 1500);
+        });
     </script>
 </body>
 </html>
