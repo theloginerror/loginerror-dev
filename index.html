@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loginerror.dev | Maciej Kuźmicz</title>
+    <meta name="description" content="Portfolio of Maciej Kuźmicz (loginerror), Senior Product Manager at UiPath. Owner of the core Activity ecosystem and community leader supporting 3M+ developers.">
+    <meta name="author" content="Maciej Kuźmicz">
+    <link rel="canonical" href="https://loginerror.dev">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://loginerror.dev/">
+    <meta property="og:title" content="Maciej Kuźmicz | loginerror.dev">
+    <meta property="og:description" content="Senior Product Manager @ UiPath. Bridging the gap between developers and product for the world's leading AI-powered automation platform.">
+    <meta property="og:image" content="https://forum.uipath.com/user_avatar/forum.uipath.com/loginerror/500/22614_2.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://loginerror.dev/">
+    <meta property="twitter:title" content="Maciej Kuźmicz | loginerror.dev">
+    <meta property="twitter:description" content="Senior Product Manager @ UiPath. Community leader supporting 3M+ developers.">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <div class="terminal">
+        <header class="terminal-header">
+            <div class="buttons">
+                <span class="close"></span>
+                <span class="minimize"></span>
+                <span class="maximize"></span>
+            </div>
+            <div class="title">loginerror@maciej-portfolio: ~</div>
+        </header>
+        
+        <main class="terminal-body">
+            <section id="intro">
+                <p class="prompt">guest@loginerror.dev:~$ whoami</p>
+                <h1>Maciej Kuźmicz (loginerror)</h1>
+                <p class="bio">
+                    Senior Product Manager @ UiPath. <br>
+                    Owner of multiple UiPath Activity packages. Bridging the gap between developers and product.
+                </p>
+            </section>
+
+            <section id="links">
+                <p class="prompt">guest@loginerror.dev:~$ ls -l /contacts</p>
+                <ul class="link-list">
+                    <li><a href="https://www.linkedin.com/in/maciej-kuzmicz/" target="_blank">LinkedIn</a></li>
+                    <li><a href="https://forum.uipath.com/u/loginerror/" target="_blank">UiPath Forum</a></li>
+                    <li><a href="https://github.com/theloginerror" target="_blank">GitHub</a></li>
+                </ul>
+                
+                <p class="prompt">guest@loginerror.dev:~$ mail -to loginerror</p>
+                <ul class="link-list">
+                    <li><a href="https://forum.uipath.com/new-message?username=loginerror&title=Contact%20from%20loginerror.dev&body=Hi%20Maciej%2C%0A%0AI%20saw%20your%20portfolio%20and..." target="_blank">Send Forum DM</a></li>
+                    <li><a href="https://www.linkedin.com/in/maciej-kuzmicz/" target="_blank">Connect on LinkedIn</a></li>
+                </ul>
+            </section>
+
+            <section id="projects">
+                <p class="prompt">guest@loginerror.dev:~$ tree /uipath/activities</p>
+                <div class="tree-view">
+<pre>
+.
+├── 📂 <b>Core</b>
+│   └── 📦 UiPath.System.Activities
+├── 📂 <b>Integrations & Web</b>
+│   └── 📦 UiPath.WebAPI.Activities
+├── 📂 <b>Productivity</b>
+│   ├── 📦 Microsoft Office 365
+│   ├── 📦 Google Workspace (GSuite)
+│   └── 📦 Desktop (Excel, Word, PowerPoint, Mail)
+└── 📂 <b>Developer</b>
+    ├── 📦 Python
+    ├── 📦 Java
+    ├── 📦 Database
+    ├── 📦 SQL
+    ├── 📦 FTP
+    ├── 📦 Cryptography
+    └── 📦 Credentials
+</pre>
+                </div>
+
+                <p class="prompt">guest@loginerror.dev:~$ ./monitor_community_pulse.sh --rapid</p>
+                <div class="project-grid">
+                    <div class="project-item legacy">
+                        <h3>Community Pulse</h3>
+                        <p>Supporting 3M+ developers since Jun 2018.</p>
+                        <div class="rapid-stats">
+                            <span class="stat-label">[VITAL]</span>
+                            <span id="cycling-stat" class="stat-val">READ_TIME: 86 days</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="footer">
+                <p class="prompt">guest@loginerror.dev:~$ uptime</p>
+                <p>Status: Online. Session time: <span id="session-time">00:00:00</span></p>
+                <p class="blink-cursor">_</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Real-time Uptime Clock
+        let startTime = Date.now();
+        const uptimeEl = document.getElementById('session-time');
+
+        function updateUptime() {
+            const now = Date.now();
+            const diff = Math.floor((now - startTime) / 1000);
+            const hours = Math.floor(diff / 3600).toString().padStart(2, '0');
+            const minutes = Math.floor((diff % 3600) / 60).toString().padStart(2, '0');
+            const seconds = (diff % 60).toString().padStart(2, '0');
+            uptimeEl.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateUptime, 1000);
+
+        // Community Pulse Stats
+        const stats = [
+            { label: "[VITAL]", val: "READ_TIME: 86 days" },
+            { label: "[VITAL]", val: "VISITED: 2,700 days" },
+            { label: "[DATA]",  val: "TOPICS_VIEWED: 57.8k" },
+            { label: "[DATA]",  val: "POSTS_READ: 339k" },
+            { label: "[ACT]",   val: "SOLUTIONS: 767" },
+            { label: "[ACT]",   val: "POSTS_CREATED: 10.3k" },
+            { label: "[INT]",   val: "LIKES_GIVEN: 12.9k" },
+            { label: "[INT]",   val: "LIKES_RCVD: 13.1k" },
+            { label: "[LOG]",   val: "BOOKMARKS: 419" }
+        ];
+
+        let currentIndex = 0;
+        const labelEl = document.querySelector('.stat-label');
+        const valEl = document.getElementById('cycling-stat');
+
+        function cycleStats() {
+            currentIndex = (currentIndex + 1) % stats.length;
+            
+            // Brief flicker effect
+            valEl.style.opacity = 0;
+            
+            setTimeout(() => {
+                labelEl.textContent = stats[currentIndex].label;
+                valEl.textContent = stats[currentIndex].val;
+                valEl.style.opacity = 1;
+            }, 50);
+        }
+
+        setInterval(cycleStats, 1500); // Adjust speed here (ms)
+    </script>
+</body>
+</html>
