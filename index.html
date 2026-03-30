@@ -39,11 +39,19 @@
         <main class="terminal-body">
             <section id="intro">
                 <p class="prompt">guest@loginerror.dev:~$ whoami</p>
-                <h1>Maciej Kuźmicz (loginerror)</h1>
+                <h1 id="name-trigger">Maciej Kuźmicz (loginerror)</h1>
                 <p class="bio">
                     Senior Product Manager @ UiPath. <br>
                     Owner of multiple UiPath Activity packages. Bridging the gap between developers and product.
                 </p>
+            </section>
+
+            <section id="glitch-overlay" class="hidden">
+                <div class="panic-box">
+                    <p class="error-msg">*** KERNEL PANIC: LOGIN_ERROR_DETECTED ***</p>
+                    <p>CRITICAL_PROCESS_DIED: user.identity</p>
+                    <p>REBOOTING SYSTEM IN <span id="panic-countdown">3</span>...</p>
+                </div>
             </section>
 
             <section id="links">
@@ -67,20 +75,24 @@
 <pre>
 .
 ├── 📂 <b>Core</b>
-│   └── 📦 UiPath.System.Activities
+│   └── 📦 System
 ├── 📂 <b>Integrations & Web</b>
-│   └── 📦 UiPath.WebAPI.Activities
+│   └── 📦 WebAPI
 ├── 📂 <b>Productivity</b>
-│   ├── 📦 Microsoft Office 365
-│   ├── 📦 Google Workspace (GSuite)
-│   └── 📦 Desktop (Excel, Word, PowerPoint, Mail)
+│   ├── 📦 Microsoft Office 365 activities
+│   ├── 📦 Google Workspace activities
+│   └── 📂 <b>Desktop activities</b>
+│       ├── 📦 Excel
+│       ├── 📦 Word
+│       ├── 📦 PowerPoint
+│       └── 📦 Mail
 └── 📂 <b>Developer</b>
-    ├── 📦 Python
-    ├── 📦 Java
-    ├── 📦 Database
-    ├── 📦 FTP
-    ├── 📦 Cryptography
-    └── 📦 Credentials
+    ├── 📦 Python activities
+    ├── 📦 Java activities
+    ├── 📦 Database activities
+    ├── 📦 FTP activities
+    ├── 📦 Cryptography activities
+    └── 📦 Credentials activities
 </pre>
                 </div>
 
@@ -160,6 +172,27 @@
 
         loadStats().then(() => {
             setInterval(cycleStats, 1500);
+        });
+
+        // Glitch Trigger
+        const trigger = document.getElementById('name-trigger');
+        const overlay = document.getElementById('glitch-overlay');
+        const countdownEl = document.getElementById('panic-countdown');
+
+        trigger.addEventListener('click', () => {
+            overlay.classList.remove('hidden');
+            let count = 3;
+            countdownEl.textContent = count;
+            
+            const timer = setInterval(() => {
+                count--;
+                countdownEl.textContent = count;
+                if (count <= 0) clearInterval(timer);
+            }, 1000);
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 3000);
         });
     </script>
 </body>
