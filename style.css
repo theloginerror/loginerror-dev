@@ -239,4 +239,9 @@ a:hover {
     .prompt {
         font-size: 0.9em;
     }
+    .panic-box {
+        padding: 20px;
+        width: 90%;
+        font-size: 0.8em;
+    }
 }
