@@ -1,0 +1,38 @@
+[
+  {
+    "label": "[VITAL]",
+    "val": "READ_TIME: 85 days"
+  },
+  {
+    "label": "[VITAL]",
+    "val": "VISITED: 2,721 days"
+  },
+  {
+    "label": "[DATA]",
+    "val": "TOPICS_VIEWED: 57.8k"
+  },
+  {
+    "label": "[DATA]",
+    "val": "POSTS_READ: 339.4k"
+  },
+  {
+    "label": "[ACT]",
+    "val": "SOLUTIONS: 767"
+  },
+  {
+    "label": "[ACT]",
+    "val": "POSTS_CREATED: 10.3k"
+  },
+  {
+    "label": "[INT]",
+    "val": "LIKES_GIVEN: 12.9k"
+  },
+  {
+    "label": "[INT]",
+    "val": "LIKES_RCVD: 13.1k"
+  },
+  {
+    "label": "[LOG]",
+    "val": "TOPICS_CREATED: 420"
+  }
+]
