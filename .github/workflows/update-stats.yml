@@ -29,17 +29,22 @@ jobs:
               echo "Attempt $attempt: Fetching $url"
 
               # Fetch with headers to get status code and Retry-After
-              response=$(curl -s -w "\n%{http_code}\n%{header_json}" "$url")
-              http_code=$(echo "$response" | tail -n 2 | head -n 1)
-              headers=$(echo "$response" | tail -n 1)
-              body=$(echo "$response" | sed '$d' | sed '$d')
+              # Use a temp file to separate body from metadata
+              temp_body=$(mktemp)
+              temp_headers=$(mktemp)
+
+              http_code=$(curl -s -w "%{http_code}" -o "$temp_body" -D "$temp_headers" "$url")
 
               if [ "$http_code" -eq 200 ]; then
-                echo "$body" > "$output"
+                cat "$temp_body" > "$output"
+                rm -f "$temp_body" "$temp_headers"
                 echo "Success: Data saved to $output"
                 return 0
               elif [ "$http_code" -eq 429 ]; then
-                retry_after=$(echo "$headers" | jq -r '.["retry-after"] // empty' 2>/dev/null || echo "")
+                # Extract Retry-After header (case-insensitive)
+                retry_after=$(grep -i "^retry-after:" "$temp_headers" | cut -d' ' -f2 | tr -d '\r\n' || echo "")
+
+                rm -f "$temp_body" "$temp_headers"
 
                 if [ -n "$retry_after" ]; then
                   echo "Rate limited (429). Retry-After: ${retry_after}s"
@@ -52,6 +57,7 @@ jobs:
                 fi
               else
                 echo "Error: HTTP $http_code"
+                rm -f "$temp_body" "$temp_headers"
                 if [ $attempt -lt $max_attempts ]; then
                   sleep 10
                 fi
