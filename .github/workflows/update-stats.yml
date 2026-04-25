@@ -24,6 +24,7 @@ jobs:
             local output="$2"
             local max_attempts=3
             local attempt=1
+            local max_rate_limit_retries=10
 
             while [ $attempt -le $max_attempts ]; do
               echo "Attempt $attempt: Fetching $url"
@@ -46,13 +47,15 @@ jobs:
 
                 rm -f "$temp_body" "$temp_headers"
 
-                if [ -n "$retry_after" ]; then
-                  echo "Rate limited (429). Retry-After: ${retry_after}s"
+                if [ -n "$retry_after" ] && [ $attempt -le $max_rate_limit_retries ]; then
+                  echo "Rate limited (429). Retry-After: ${retry_after}s (retry without incrementing attempt counter)"
                   sleep "$retry_after"
+                  # Don't increment attempt counter for rate limits with Retry-After header
+                  continue
                 else
                   # Default exponential backoff if no Retry-After header
                   wait_time=$((attempt * 30))
-                  echo "Rate limited (429). No Retry-After header. Waiting ${wait_time}s"
+                  echo "Rate limited (429). No Retry-After header or max rate limit retries exceeded. Waiting ${wait_time}s"
                   sleep "$wait_time"
                 fi
               else
