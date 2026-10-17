@@ -25,14 +25,14 @@
   },
   {
     "label": "[INT]",
-    "val": "LIKES_GIVEN: 13.0k"
+    "val": "LIKES_GIVEN: 11.1k"
   },
   {
     "label": "[INT]",
-    "val": "LIKES_RCVD: 13.2k"
+    "val": "LIKES_RCVD: 11.2k"
   },
   {
     "label": "[LOG]",
-    "val": "TOPICS_CREATED: 430"
+    "val": "TOPICS_CREATED: 292"
   }
 ]
